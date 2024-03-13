@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fruit Search</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #7f7fd5, #86a8e7, #91eae4);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  #search {
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    margin-bottom: 10px;
+  }
+
+  #results {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+  }
+
+  #results li {
+    list-style-type: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  #results li:hover {
+    background-color: #f0f0f0;
+  }
+</style>
+</head>
+<body>
+
+<input type="text" id="search" placeholder="Search fruits...">
+<ul id="results"></ul>
+
+<script>
+const fruits = ["Apple", "Banana", "Grape", "Orange", "Pineapple"];
+
+const searchInput = document.getElementById('search');
+const resultsList = document.getElementById('results');
+
+searchInput.addEventListener('input', search);
+resultsList.addEventListener('click', useSuggestion);
+
+function search() {
+  const userInput = searchInput.value.toLowerCase();
+  const results = fruits.filter(fruit => fruit.toLowerCase().includes(userInput));
+  displayResults(results);
+}
+
+function displayResults(results) {
+  resultsList.innerHTML = '';
+  if (results.length === 0) {
+    resultsList.style.display = 'none';
+    return;
+  }
+  results.forEach(result => {
+    const li = document.createElement('li');
+    li.textContent = result;
+    resultsList.appendChild(li);
+  });
+  resultsList.style.display = 'block';
+}
+
+function useSuggestion(event) {
+  if (event.target.tagName === 'LI') {
+    searchInput.value = event.target.textContent;
+    resultsList.style.display = 'none';
+  }
+}
+</script>
+
+</body>
+</html>
