@@ -1,4 +1,4 @@
-const fruits = ["Apple", "Banana", "Grape", "Orange", "Pineapple"];
+const fruits = ["Apple", "Banana", "Papaya", "Grape", "Orange", "Pineapple"];
 
 const searchInput = document.getElementById('search');
 const resultsList = document.getElementById('results');
