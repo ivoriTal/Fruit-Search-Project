@@ -1,27 +1,33 @@
-const fruits = ["Apple", "Banana", "Orange", "Grape", "Kiwi", "Mango", "Pineapple"];
+const fruits = ["Apple", "Banana", "Grape", "Orange", "Pineapple"];
 
-const searchInput = document.getElementById('searchInput');
-const fruitList = document.getElementById('fruitList');
-
+const searchInput = document.getElementById('search');
+const resultsList = document.getElementById('results');
 searchInput.addEventListener('input', search);
+resultsList.addEventListener('click', useSuggestion);
 
 function search() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const results = fruits.filter(fruit => fruit.toLowerCase().includes(searchTerm));
-    displayResults(results);
+  const userInput = searchInput.value.toLowerCase();
+  const results = fruits.filter(fruit => fruit.toLowerCase().includes(userInput));
+  displayResults(results);
 }
 
 function displayResults(results) {
-    fruitList.innerHTML = '';
-    results.forEach(result => {
-        const li = document.createElement('li');
-        li.textContent = result;
-        li.addEventListener('click', () => useSuggestion(result));
-        fruitList.appendChild(li);
-    });
+  resultsList.innerHTML = '';
+  if (results.length === 0) {
+    resultsList.style.display = 'none';
+    return;
+  }
+  results.forEach(result => {
+    const li = document.createElement('li');
+    li.textContent = result;
+    resultsList.appendChild(li);
+  });
+  resultsList.style.display = 'block';
 }
 
-function useSuggestion(suggestion) {
-    searchInput.value = suggestion;
-    fruitList.innerHTML = '';
+function useSuggestion(event) {
+  if (event.target.tagName === 'LI') {
+    searchInput.value = event.target.textContent;
+    resultsList.style.display = 'none';
+  }
 }
